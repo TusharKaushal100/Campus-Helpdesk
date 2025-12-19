@@ -5,16 +5,17 @@ import {Secret} from './config.js';
 
 
 export interface AuthRequest extends Request{
-     userid?:string
+     userid:string
 }
 
 interface jwtPayload{
      id:string
 }
 
-const auth = (req:AuthRequest,res:Response,next:NextFunction)=>{
-   
-    const token = req.headers.authorisation;
+export const auth = (req:AuthRequest,res:Response,next:NextFunction)=>{
+      
+    console.log("In auth middleware");
+    const token = req.headers.authorization;
 
     if(!token){
         return res.status(401).json({message:"Unauthorized"});
@@ -35,3 +36,4 @@ const auth = (req:AuthRequest,res:Response,next:NextFunction)=>{
     }
 
 }
+

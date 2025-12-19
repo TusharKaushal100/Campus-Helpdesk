@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import { UserModel } from './db.js';
-import { userRouter } from './routes/user.js';  
+import { userRouter } from './routes/user.js'; 
+import { questionRouter } from './routes/question.js'; 
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/v1/auth',userRouter);
+app.use('/api/v1/question',questionRouter);
 
 const main = async()=>{ 
   
