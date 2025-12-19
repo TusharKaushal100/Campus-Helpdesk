@@ -14,6 +14,13 @@ export interface Question{
 
 }
 
+export interface Answer{
+      content:string,
+      questionId:mongoose.Types.ObjectId,
+      userId:mongoose.Types.ObjectId   // because it is compile time so it only accepts types so you have to write fully 
+
+}
+
 
 const userSchema = new Schema({
     username:{type:String,required:true,unique:true},
@@ -30,10 +37,18 @@ const questionSchema = new Schema<Question>({
      title:{type:String,required:true},
      description:{type:String,required:true},
      tags:[{type:String}],
-     userId:{type:ObjectId,ref:'users',required:true}
+     userId:{type:ObjectId,ref:'users',required:true} // it is a runtime so no need to write fully
      },
     { timestamps:true }
     );
 
+const answerSchema = new Schema<Answer>({
+      content:{type:String,required:true},
+      questionId:{type:ObjectId,ref:'questions',required:true},
+      userId:{type:ObjectId,ref:'users',required:true}
+},
+{timestamps:true})    
+
 export const UserModel = model('users',userSchema)
 export const QuestionModel = model<Question>('questions',questionSchema)
+export const AnswerModel = model<Answer>('answers',answerSchema)
