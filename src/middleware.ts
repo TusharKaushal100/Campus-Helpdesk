@@ -20,14 +20,14 @@ export const auth = (req:AuthRequest,res:Response,next:NextFunction)=>{
     if(!token){
         return res.status(401).json({message:"Unauthorized"});
     }
-
+    try{
     const decoded = jwt.verify(token as string,Secret) as jwtPayload;
 
     if(!decoded){
           return res.status(401).json({message:"Unauthorized"});
     }
 
-    try{
+    
               req.userid = decoded.id;
               next();
     }

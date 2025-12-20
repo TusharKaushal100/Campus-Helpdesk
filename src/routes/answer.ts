@@ -3,6 +3,7 @@ import {AuthRequest} from '../middleware.js';
 import {Request,Response} from 'express';
 import {auth} from '../middleware.js';
 import { AnswerModel } from '../db.js'; 
+import mongoose from 'mongoose';
 
 
 export const answerRouter = express.Router();
@@ -50,7 +51,7 @@ const listAnswers = async (req:AuthRequest,res:Response)=>{
 
     try{
 
-       const answers = await AnswerModel.find({questionId}).populate('userId','username name');
+       const answers = await AnswerModel.find({questionId}).sort({createdAt:-1}).populate('userId','username name'); // -1 newer first +1 older first
        
        if(!answers || answers.length === 0){
             return res.status(404).json({message:"No answers found for this question"});
@@ -63,7 +64,128 @@ const listAnswers = async (req:AuthRequest,res:Response)=>{
     
 }
 
+const deleteAnswer = async (req:AuthRequest,res:Response)=>{
+
+    console.log("In delete answer handler");
+
+    const answerId = req.params.answerId;
+    //   or
+    //  const {answerId} = req.params;
+
+    if(!answerId){
+        return res.status(400).json({message:"AnswerId is required"});
+    }
+
+    const answer = await AnswerModel.findById(answerId);  // not find one so no object style notation {}
+
+    if(!answer){
+        return res.status(404).json({message:"Answer not found"});
+    }
+
+
+    const userId = req.userid;
+
+    if(answer.userId.toString() !== userId){
+
+        return res.status(403).json({message:"Forbidden: You can only delete your own answers"});
+    }
+
+    try{
+        await AnswerModel.findByIdAndDelete(answerId);
+        return res.status(200).json({message:"Answer deleted successfully"});
+    }
+    catch(err){
+        return res.status(500).json({message:"Error in deleting answer"});
+    }
+    
+}
+
+const editAnswer = async (req:AuthRequest,res:Response)=>{
+   
+    console.log("inside edit answer");
+
+    const answerId = req.params.answerId;   
+    const userId = req.userid;
+
+   
+    
+    if(!answerId){
+          return res.status(403).json({message:"please provide the answerId to be deleted"})
+    }
+    try{
+              const answer = await AnswerModel.findById(answerId)
+               const {content} = req.body; 
+
+                if(!answer){    
+                    return res.status(404).json({message:"No answer found"});
+                }
+
+                if(userId != answer.userId.toString()){
+                        return res.status(403).json({message:"Forbidden: You can only edit your own answers"});
+                }
+
+                await AnswerModel.findByIdAndUpdate(answerId,{
+                        content : content || answer.content
+                })
+
+                return res.status(200).json({message:"Answer updated successfully"});
+    }
+    catch(err){
+
+        return res.status(500).json({message:"Error in editing answer"});
+
+    }
+
+}
+
+const upvoteAnswer = async (req:AuthRequest,res:Response)=>{
+    
+    console.log("inside the upvote answers")
+
+    const userId = req.userid
+    const answerId = req.params.answerId 
+try{
+    const answer = await AnswerModel.findById(answerId)
+    
+    if(!answer){
+           return res.status(403).json({message:"the answer doesnt exist"});
+    }
+    if(userId != answer.userId.toString()){
+             return res.status(403).json({message:"Forbidden: You can only vote on others' answers"});
+    }
+    
+
+    const upvoted = answer.upvote.some((id)=>id.toString() === userId)
+
+    if(upvoted){
+
+        answer.upvote = answer.upvote.filter((id)=>id.toString() != userId) // because id saved in upvotes array is of types objectId soo convert i to string 
+        
+    }
+    else{
+        answer.upvote.push(new mongoose.Types.ObjectId(userId))
+
+    }
+
+    await answer.save(); // this line make actual changes to the database
+
+    return res.status(200).json({message:upvoted?"upvote removed":"upvote added",
+        upvoteCount:answer.upvote.length
+    });
+}
+catch(err){
+      return res.status(403).json({message:"error in upvoting"})
+}
+
+}
+
 //@ts-ignore
 answerRouter.post('/',auth,createAnswer);
 //@ts-ignore
 answerRouter.get('/listAnswers',auth,listAnswers);
+//@ts-ignore
+answerRouter.delete('/:answerId',auth,deleteAnswer);
+//@ts-ignore 
+answerRouter.put('/edit/:answerId',auth,editAnswer)
+//@ts-ignore
+answerRouter.post('/:answerId/vote',auth,upvoteAnswer)

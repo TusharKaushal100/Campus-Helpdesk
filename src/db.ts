@@ -18,7 +18,7 @@ export interface Answer{
       content:string,
       questionId:mongoose.Types.ObjectId,
       userId:mongoose.Types.ObjectId   // because it is compile time so it only accepts types so you have to write fully 
-
+      upvote:mongoose.Types.ObjectId[]  // [mongoose.Types.ObjectId] this couldnt be done because it means tuple with only one element  
 }
 
 
@@ -45,7 +45,8 @@ const questionSchema = new Schema<Question>({
 const answerSchema = new Schema<Answer>({
       content:{type:String,required:true},
       questionId:{type:ObjectId,ref:'questions',required:true},
-      userId:{type:ObjectId,ref:'users',required:true}
+      userId:{type:ObjectId,ref:'users',required:true},
+      upvote:[{type:ObjectId,default:[],ref:'user'}]
 },
 {timestamps:true})    
 
