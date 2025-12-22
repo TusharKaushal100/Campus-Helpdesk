@@ -6,6 +6,7 @@ interface ButtonProps{
        startIcon?:ReactElement,
        endIcon?:ReactElement,
        text:string
+       onClick ?: ()=>void
 }
 
 const buttonSizeClass = {
