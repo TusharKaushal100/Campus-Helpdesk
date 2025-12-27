@@ -9,7 +9,7 @@ function APP(){
      <div>
            <div className="m-5 flex justify-end"> 
 
-          <Button startIcon = {<Plus size = {"md"}/>} variant="primary" size="md" text="Click me"></Button>
+          <Button startIcon = {<Plus size = {"md"}/>} variant="primary" size="md" text="Post Q"></Button>
           
          </div>
 

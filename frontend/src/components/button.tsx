@@ -25,7 +25,7 @@ const defaultStyle = "hover:px-4 hover:py-1 hover:bg-black hover:text-white dura
 export const Button = (props:ButtonProps)=>{
     
 
-    return <button className = {`${buttonSizeClass[props.size]} ${variantClass[props.variant]} ${defaultStyle}`}>
+    return <button onClick = {props.onClick} className = {`${buttonSizeClass[props.size]} ${variantClass[props.variant]} ${defaultStyle}`}>
                <div className = "flex items-center">
                      {props.startIcon?props.startIcon:null}
                      <div className = "pr-1 pl-1">
