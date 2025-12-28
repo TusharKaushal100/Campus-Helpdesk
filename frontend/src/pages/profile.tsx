@@ -1,9 +1,9 @@
-import { QuestionCard } from "./question-card"
+import { QuestionCard } from "../components/question-card"
 import {Plus} from "../icons/plus"
 import {Question} from "../icons/question"
-import { AnswerCard } from "./answer-card"
-import { HostBox } from "./host-box"
-import { SideBar } from "./sidebar"
+import { AnswerCard } from "../components/answer-card"
+import { HostBox } from "../components/host-box"
+import { SideBar } from "../components/sidebar"
 
 const txt = "hey there i am writing thsi meassge just to test kjcbewek coewn uooew uowee uoodbewe ioboew iowebo "
 const url = "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" 

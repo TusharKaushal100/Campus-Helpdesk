@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { ReactElement } from "react"
-import { Button } from "../components/button"
+import { Button } from "./button"
 
 
 interface Host{
