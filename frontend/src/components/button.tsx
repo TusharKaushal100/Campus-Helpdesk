@@ -6,7 +6,8 @@ interface ButtonProps{
        startIcon?:ReactElement,
        endIcon?:ReactElement,
        text:string
-       onClick ?: ()=>void
+       onClick ?: ()=>void,
+       className?:string
 }
 
 const buttonSizeClass = {
@@ -25,8 +26,8 @@ const defaultStyle = "hover:px-4 hover:py-1 hover:bg-black hover:text-white dura
 export const Button = (props:ButtonProps)=>{
     
 
-    return <button onClick = {props.onClick} className = {`${buttonSizeClass[props.size]} ${variantClass[props.variant]} ${defaultStyle}`}>
-               <div className = "flex items-center">
+    return <button onClick = {props.onClick} className = {`${buttonSizeClass[props.size]} ${variantClass[props.variant]} ${defaultStyle} ${props.className}`}>
+               <div className = "flex items-center justify-center ">
                      {props.startIcon?props.startIcon:null}
                      <div className = "pr-1 pl-1">
                               {props.text}

@@ -1,3 +1,8 @@
+import { useRef } from "react"
+import { Input } from "./input"
+import { Button } from "./button"
+import { Plus } from "../icons/plus"
+import { Cross } from "../icons/cross"
 
 interface ModalData{
      onClick?:()=>void,
@@ -9,13 +14,30 @@ interface ModalData{
 }
 
 export const Modal = (props:ModalData)=>{
+         
+     const titleRef = useRef(null)
+     const descriptionRef = useRef(null)
 
               return props.pressed ? <div className=" fixed flex items-center justify-center h-screen w-screen inset-0"> {/*so yeah if we dont used fixed then the profile div would come below this modal div so fixed is use to fix or glue it to the screen like a shield that stays in place so it appears on top of profile*/}
-                       <div className=" fixed h-screen w-screen bg-white opacity-50" onClick = {props.onClick}>
+                       <div className=" fixed h-screen w-screen bg-white opacity-50 z-40" onClick = {props.onClick}>
                       {/* inset-0 shorthand for left-0 r-0 t-0 b-0*/}
                        </div>
-                        <div className="w-72 h-72  bg-white border-slate-300 z-50 shadow-lg rounded-md"> 
-                                 
+                        <div className="hover:w-76 hover:h-76 duration-300 transition-all w-72 h-72  bg-white border-slate-300 z-50 shadow-lg rounded-md"> 
+                             <div className="flex justify-end p-5">
+                                  <Cross size={"md"} onClick={props.onClick}></Cross>
+                             </div>
+                             <div className = " flex items-center justify-center">
+                                    <div>
+                                    <Input ref = {titleRef} placeholder={"enter title"} ></Input> 
+                                    <Input ref = {descriptionRef} placeholder={"enter description"} ></Input>
+                                    <div className={"mt-6"}>
+                                          <Button variant ={"primary"} text={"Submit"} size={"md"} className = {"w-full"}></Button> 
+                                    </div>
+                                    
+                                    </div>
+                              </div> 
+                             
+                               
                         </div>
                      
                   </div>:null
