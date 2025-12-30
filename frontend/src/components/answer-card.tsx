@@ -9,7 +9,7 @@ interface Answer{
 
 export const AnswerCard = (props :Answer)=>{
 
-      return <div className = "bg-white rounded-lg w-full border-slate-500 shadow-lg m-1">
+      return <div className = "bg-white rounded-lg w-full border-slate-500 shadow-lg m-1 transition-transform duration-300 ease-out hover:scale-[1.03]">
 
         <div className="flex  items-center">
               <div className= "p-3">

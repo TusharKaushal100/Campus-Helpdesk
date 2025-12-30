@@ -1,14 +1,24 @@
+import React from "react";
 
-interface inputProps{
-       ref:any,
-       placeholder:string,
-       defaultStyle?:string
+interface InputProps {
+  placeholder: string;
+  defaultStyle?: string;
+  type?: string;
 }
 
-export const Input = (props:inputProps)=>{
-         
-    return <div>
-                 <input ref = {props.ref} placeholder = {props.placeholder} className = {`rounded-md p-2 m-2 bg-white text-black border border-black hover:bg-gray-300 ${props.defaultStyle}`}>
-                 </input>
-    </div>
-}
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ placeholder, defaultStyle = "", type = "text" }, ref) => {
+    return (
+      <div>
+        <input
+          ref={ref}   // ✅ ref correctly forwarded
+          type={type}
+          placeholder={placeholder}
+          className={`rounded-md p-2 m-2 bg-white text-black border border-black hover:bg-gray-300 ${defaultStyle}`}
+        />
+      </div>
+    );
+  }
+);
+
+Input.displayName = "Input";

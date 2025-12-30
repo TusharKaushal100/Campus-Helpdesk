@@ -11,7 +11,8 @@ interface Question{
 
 export const QuestionCard = (props:Question)=>{
 
-       return <div className ="bg-white   rounded-lg border-slate-500 shadow-lg outline-none w-full  p-2 mb-1">
+       return <div className ="bg-white   rounded-lg border-slate-500 shadow-lg outline-none w-full transition-transform duration-300 ease-out
+    hover:scale-[1.03] p-2 mb-1">
              
              <div className = "pl-2 flex items-center justify-between">
                   <div className="flex gap-2">
