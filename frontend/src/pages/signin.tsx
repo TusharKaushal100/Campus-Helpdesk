@@ -32,8 +32,11 @@ export const Login = ()=>{
     try{
         setError({}); // clear old errors
 
-         await axios.post(`${URL}/api/v1/auth/login`,{username,password});
+         const response = await axios.post(`${URL}/api/v1/auth/login`,{username,password});
 
+         console.log(`token from login=${response.data.token}`)
+         
+         localStorage.setItem("token",response.data.token)
          navigate('/myQuestions')
     }
     catch(err:any){
