@@ -14,11 +14,7 @@ export const Profile = ()=>{
                 <SideBar></SideBar>
             </div>
             <div className = "flex-1 gap-2" >  {/*take the remaining width with flex-1 need to have flex setup in the parent div */}
-                <HostBox
-                question = {<QuestionCard icon = {<Question size={"md"}></Question>} image = {url} title={"this is sample"} description={txt}></QuestionCard>}
-                answer = { [<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>]}
-                
-            ></HostBox>
+              
             <HostBox
                 question = {<QuestionCard icon = {<Question size={"md"}></Question>} image = {url} title={"this is sample"} description={txt}></QuestionCard>}
                 answer = { [<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>,<AnswerCard name = {"Kartik"} content={txt} image= {url}></AnswerCard>]}
